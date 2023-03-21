@@ -15,17 +15,25 @@ def menu():
 
 # Function for encoding and storing password input.
 def encode(password):
-    global encoded_password
-    encoded_password_password = ''
+    encoded_password = ''
     for digit in password:
-        digit = str((int(digit) + 3) % 10)
-        encoded_password_password += digit
+        digit = str((int(digit) + 3))
+        encoded_password += digit
     print('Your password has been encoded and stored!\n')
+    # Emma: added return statement
+    return encoded_password
 
 
-# Function for decoding and storing decoded password.
-def decode(password):
-    global decoded_password
+# Emma: Function for decoding and storing decoded password.
+def decode(encoded_password):
+    decoded_password = ""
+    # Emma: Loops trough digits in encoded password and subtracts 3
+    for i in range(0, len(encoded_password)):
+        num = int(encoded_password[i])
+        num -= 3
+        # Emma: Adds original values to decoded string
+        decoded_password += str(num)
+    return decoded_password
 
 
 # Main function that runs through a menu loop with the other functions.
@@ -36,12 +44,14 @@ def main():
         menu_option = int(input('Please enter an option: '))
         if menu_option == 1:
             password = (input('Please enter your password to encode: '))
-            encode(password)
+            encoded_password = encode(password)
         elif menu_option == 2:
-            if encoded_password != '':
-                decode(password)
-                print('The encoded password is ', encoded_password, end= '')
-                print('and the original password is ', decoded_password, end='.\n')
+            if password != '':
+                # Emma: added function to decode password
+                decoded_password = decode(encoded_password)
+                # Emma: Changed spacing in print statement
+                print('The encoded password is ', encoded_password, sep='', end='')
+                print(', and the original password is', decoded_password, end='.\n')
             else:
                 print('Error: no password to decode.\n')
         elif menu_option == 3:
@@ -53,3 +63,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
